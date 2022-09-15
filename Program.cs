@@ -54,7 +54,7 @@ namespace TCNAImmersiveExperiencesTest
             int totalTacosAvailable = ingredientQuantity.Min();
 
             //set the total cost of ingredients per taco
-            var totalTacoIncredientCost = ingredientCost.Sum();
+            float totalTacoIncredientCost = ingredientCost.Sum();
 
             //because available taco's are governed by the lowest number of ingredients
             //set the total available tacos to the minimum ingredient level
@@ -63,14 +63,14 @@ namespace TCNAImmersiveExperiencesTest
 
             //set the the taco price for the current day
             //if it's a sale day, cut price in half
-            var todaysTacoChargePrice = isSaleHappening ? baseChargePricePerTaco / 2 : baseChargePricePerTaco;
+            float todaysTacoChargePrice = isSaleHappening ? baseChargePricePerTaco / 2 : baseChargePricePerTaco;
 
             //loop through the number of tacos that are available to build out totals
-            for (var i = 0; i < totalTacosAvailable; i++)
+            for (int i = 0; i < totalTacosAvailable; i++)
             {
                 //use random number generator to create random tip between .08 and .16
-                var randomGen = new System.Random();
-                var tip = (float)(randomGen.Next(8, 16) * .01);
+                Random randomGen = new Random();
+                float tip = (float)(randomGen.Next(8, 16) * .01);
 
                 returnInfo.TotalChargeForTacos += todaysTacoChargePrice + tip;
             }
