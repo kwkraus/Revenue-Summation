@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using System.Linq.Expressions;
 
 namespace TCNAImmersiveExperiencesTest
 {
@@ -8,18 +7,18 @@ namespace TCNAImmersiveExperiencesTest
     {
         static void Main(string[] args)
         {
-            //0=33,1=22,2=66,3=88,4=2
-            //0=2.00,1=2.23,2=4.33,3=1.44,4=10.00
+            //initialize parameters to be used for calculation
+            int[] ingredientQuantities = { 38, 93, 48, 54, 95 };
+            float[] ingredientCosts = { .30f, .55f, .44f, .22f, .11f };
 
-            int[] ingredients = { 3, 9, 8, 4, 5 };
+            var results = ToyotasTacomaTacoTruckTrunkTrouble(ingredientQuantities, ingredientCosts);
 
-            float[] costs = { .30f, .55f, .44f, .22f, .11f };
+            Console.WriteLine($"Total Available Tacos = {results.TotalAvailableTacos}");
+            Console.WriteLine($"Total Taco Ingredient Cost = {results.OurTotalIngredientCosts:C}");
+            Console.WriteLine($"Total Taco Revenue = {results.TotalChargeForTacos:C}");
+            Console.WriteLine($"Total Taco Profit = {(results.TotalChargeForTacos - results.OurTotalIngredientCosts):C}");
 
-            var results = oToyotasTacomaTacoTruckTrunkTrouble(ingredients, costs);
-
-            Console.WriteLine(results);
             Console.Read();
-
         }
 
         /// <summary>
@@ -39,55 +38,41 @@ namespace TCNAImmersiveExperiencesTest
         /// comments, suggestions, rewrites would you bring up?
         ///
         /// </summary>
-        /// <param name="aoIngredientList">Each of the ingredients sent in.</param>
-        /// <param name="aoIngredientCosts">Each of the costs of the ingredients sent in (matches ingredient list order)</param>
+        /// <param name="ingredientQuantity">Each of the ingredients sent in.</param>
+        /// <param name="ingredientCost">Each of the costs of the ingredients sent in (matches ingredient list order)</param>
         /// <returns></returns>
-        static TacoInformation oToyotasTacomaTacoTruckTrunkTrouble(int[] aoIngredientList, float[] aoIngredientCosts)
+        static TacoInformation ToyotasTacomaTacoTruckTrunkTrouble(int[] ingredientQuantity, float[] ingredientCost)
         {
+            //initialize TacoInformation to hold totals
             TacoInformation returnInfo = new TacoInformation();
-            float fBaseChargePricePerTaco = 2.34f;   //2.34  - 1.95  = .39 
+            float baseChargePricePerTaco = 2.34f;
 
-            bool bIsSaleHappening = false;
+            //set flag for sale day.  Currently sale day is only Tuesday
+            bool isSaleHappening = (DateTime.Now.DayOfWeek.ToString() == "Tuesday");
 
-            
-            int iterWIthLowestIngredient = 0;  //would change variable to xxx
+            //find minimum ingredient quantity for all ingredients
+            int totalTacosAvailable = ingredientQuantity.Min();
 
-            //Loops are inefficient, recommend using Linq library to grab lowest quantity
-            //int iterWIthLowestIngredient = aoIngredientList.Min();
-            for (int i = 0; i < aoIngredientList.Length; ++i)
+            //set the total cost of ingredients per taco
+            var totalTacoIncredientCost = ingredientCost.Sum();
+
+            //because available taco's are governed by the lowest number of ingredients
+            //set the total available tacos to the minimum ingredient level
+            returnInfo.TotalAvailableTacos = totalTacosAvailable;
+            returnInfo.OurTotalIngredientCosts = totalTacoIncredientCost * totalTacosAvailable;
+
+            //set the the taco price for the current day
+            //if it's a sale day, cut price in half
+            var todaysTacoChargePrice = isSaleHappening ? baseChargePricePerTaco / 2 : baseChargePricePerTaco;
+
+            //loop through the number of tacos that are available to build out totals
+            for (var i = 0; i < totalTacosAvailable; i++)
             {
-                if (aoIngredientList[i] < aoIngredientList[iterWIthLowestIngredient])
-                {
-                    iterWIthLowestIngredient = i;
-                }
-            }
-
-            while (aoIngredientList[iterWIthLowestIngredient] > 0)
-            {
-                for (int i = 0; i < aoIngredientList.Length; ++i)
-                {
-                    aoIngredientList[i]--;
-                }
-
-                if (DateTime.Now.DayOfWeek.ToString() == "Tuesday")
-                {
-                    bIsSaleHappening = true;
-                }
-
-                returnInfo.fTotalAvailableTacos++;
-
+                //use random number generator to create random tip between .08 and .16
                 var randomGen = new System.Random();
-                returnInfo.fTotalChargeForTacos += fBaseChargePricePerTaco + randomGen.Next(8, 16);
+                var tip = (float)(randomGen.Next(8, 16) * .01);
 
-                if(bIsSaleHappening)
-                {
-                    returnInfo.fTotalChargeForTacos -= fBaseChargePricePerTaco / 2;
-                }
-
-                for (int i = 0; i < aoIngredientCosts.Length; ++i)
-                {
-                    returnInfo.fOurTotalIngredientCosts += aoIngredientCosts[i];
-                }
+                returnInfo.TotalChargeForTacos += todaysTacoChargePrice + tip;
             }
 
             return returnInfo;
@@ -96,8 +81,8 @@ namespace TCNAImmersiveExperiencesTest
 
     public struct TacoInformation
     {
-        public float fTotalAvailableTacos;
-        public float fTotalChargeForTacos;
-        public float fOurTotalIngredientCosts;
+        public float TotalAvailableTacos;
+        public float TotalChargeForTacos;
+        public float OurTotalIngredientCosts;
     }
 }
