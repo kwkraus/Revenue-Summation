@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\kkraus\\OneDrive - Microsoft\\Desktop\\code test\\TCNAImmersiveExperiencesTest.csproj",
+      "projectUniqueName": "C:\\Users\\kkraus\\source\\repos\\kwkraus\\revenue-summation\\Revenue-Summation\\Simulation\\TCNAImmersiveExperiencesTest.csproj",
       "projectName": "TCNAImmersiveExperiencesTest",
-      "projectPath": "C:\\Users\\kkraus\\OneDrive - Microsoft\\Desktop\\code test\\TCNAImmersiveExperiencesTest.csproj",
+      "projectPath": "C:\\Users\\kkraus\\source\\repos\\kwkraus\\revenue-summation\\Revenue-Summation\\Simulation\\TCNAImmersiveExperiencesTest.csproj",
       "packagesPath": "C:\\Users\\kkraus\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\kkraus\\OneDrive - Microsoft\\Desktop\\code test\\obj\\",
+      "outputPath": "C:\\Users\\kkraus\\source\\repos\\kwkraus\\revenue-summation\\Revenue-Summation\\Simulation\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\kkraus\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -61,7 +61,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.400\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.401\\RuntimeIdentifierGraph.json"
       }
     }
   }
